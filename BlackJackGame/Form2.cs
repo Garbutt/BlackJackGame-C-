@@ -36,47 +36,49 @@ namespace BlackJackGame
         private Random randomGen = new Random();
         Random rndCard = new Random();
         private int currentCardIndex = -1;
-        
+        private int playerTotal = 0;
+        private int dealerTotal = 0;
+
 
         private void button1_Click(object sender, EventArgs e)
         {
 
             int cardNumber;
-            int cardValue;
+            
 
             do
             {
                 cardNumber = rndCard.Next(0, 51);
-            } while (cardNumber == currentCardIndex ||
+            } while (cardNumber == cardValue ||
                      (pictureBox3.Image != null && pictureBox4.Image != null && pictureBox5.Image != null));
 
             if (pictureBox3.Image == null)
             {
                 pictureBox3.Image = imageList1.Images[cardNumber];
                 pictureBox3.Visible = true;  // Make the PictureBox visible
-                currentCardIndex = cardNumber;
+                cardValue = cardNumber;
             }
             else if (pictureBox4.Image == null)
             {
                 pictureBox4.Image = imageList1.Images[cardNumber];
                 pictureBox4.Visible = true;  // Make the PictureBox visible
-                currentCardIndex = cardNumber;
+                cardValue = cardNumber;
             }
             else if (pictureBox5.Image == null)
             {
                 pictureBox5.Image = imageList1.Images[cardNumber];
                 pictureBox5.Visible = true;  // Make the PictureBox visible
-                currentCardIndex = cardNumber;
+                cardValue = cardNumber;
             }
 
             cardValue = calcCardValue(cardNumber);
 
-            // Use the cardValue as needed
+            
         }
         private int calcCardValue(int number)
         {
 
-            int cardValue;
+            
 
 #pragma warning disable format
             switch (number)
@@ -215,7 +217,7 @@ namespace BlackJackGame
             button1.Visible = true;
             button2.Visible = true;
 
-            // Use the cardValue as needed
+            playerTotal += cardValue;
         }
 
         private void DrawDealerCard(PictureBox pictureBox)
@@ -226,11 +228,37 @@ namespace BlackJackGame
             {
                 dealerCardNumber = rndCard.Next(0, 51);
                 dealerCardValue = calcCardValue(dealerCardNumber);
-            } while (dealerCardValue > 30 && dealerCardValue < 52); // Ensure the card value is between 1 and 10
+            } while (dealerCardValue > 38 && dealerCardValue < 52); // Ensure the card value is between 8 and 10
 
             pictureBox.Image = imageList1.Images[dealerCardNumber];
 
-            // Use dealerCardValue as needed
+            dealerTotal += dealerCardValue;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            determineWinner();
+        }
+
+       private void determineWinner()
+        {
+            if (playerTotal > 21)
+            {
+                MessageBox.Show("Player Bust! Dealer Wins!");
+            }
+
+            else if (dealerTotal > 21 || playerTotal > dealerTotal)
+            {
+                MessageBox.Show("Player Wins!");
+            }
+
+            else if (playerTotal < dealerTotal)
+                MessageBox.Show("Dealer Wins!");
+
+            else
+            {
+                MessageBox.Show("It's a Tie!");
+            }
         }
     }
 }
