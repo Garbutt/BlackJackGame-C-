@@ -14,11 +14,17 @@ namespace BlackJackGame
 {
     public partial class Form2 : Form
     {
-        
+
         private int cardValue;
         public Form2()
         {
             InitializeComponent();
+            pictureBox3.Visible = false;
+            pictureBox4.Visible = false;
+            pictureBox5.Visible = false;
+            button1.Visible = false;
+            button2.Visible = false;
+            
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -26,126 +32,206 @@ namespace BlackJackGame
 
         }
 
+        int Cards;
+        private Random randomGen = new Random();
+        Random rndCard = new Random();
+        private int currentCardIndex = -1;
+        
+
         private void button1_Click(object sender, EventArgs e)
         {
-            Random random = new Random();
-            int cardNumber = random.Next(0, 51);
+
+            int cardNumber;
+            int cardValue;
+
+            do
+            {
+                cardNumber = rndCard.Next(0, 51);
+            } while (cardNumber == currentCardIndex ||
+                     (pictureBox3.Image != null && pictureBox4.Image != null && pictureBox5.Image != null));
+
+            if (pictureBox3.Image == null)
+            {
+                pictureBox3.Image = imageList1.Images[cardNumber];
+                pictureBox3.Visible = true;  // Make the PictureBox visible
+                currentCardIndex = cardNumber;
+            }
+            else if (pictureBox4.Image == null)
+            {
+                pictureBox4.Image = imageList1.Images[cardNumber];
+                pictureBox4.Visible = true;  // Make the PictureBox visible
+                currentCardIndex = cardNumber;
+            }
+            else if (pictureBox5.Image == null)
+            {
+                pictureBox5.Image = imageList1.Images[cardNumber];
+                pictureBox5.Visible = true;  // Make the PictureBox visible
+                currentCardIndex = cardNumber;
+            }
+
+            cardValue = calcCardValue(cardNumber);
+
+            // Use the cardValue as needed
         }
-
-       
-
-        int number;
-
-        int cards(int number)
+        private int calcCardValue(int number)
         {
 
             int cardValue;
 
+#pragma warning disable format
             switch (number)
             {
                 case 0:
-                    Image acec = imageList1.Images[0];
-                    Image aced = imageList1.Images[1];
-                    Image aceh = imageList1.Images[2];
-                    Image aces = imageList1.Images[3];
-
-                    cardValue =  11;
-                    break;
-
                 case 1:
-                    Image twod = imageList1.Images[4];
-                    Image twoc = imageList1.Images[5];
-                    Image twoh = imageList1.Images[6];
-                    Image twos = imageList1.Images[7];
-                   
-                    cardValue = 2;
-                    break;
-
                 case 2:
-                    Image threed = imageList1.Images[8];
-                    Image threec = imageList1.Images[9];
-                    Image threeh = imageList1.Images[10];
-                    Image threes = imageList1.Images[11];
-                    
-                    cardValue = 3;
-                    break;
-
                 case 3:
-                    Image fourd = imageList1.Images[12];
-                    Image fourc = imageList1.Images[13];
-                    Image fourh = imageList1.Images[14];
-                    Image fours = imageList1.Images[15];
-                    cardValue = 4;
+                    cardValue = 11;
                     break;
 
                 case 4:
-                    Image fived = imageList1.Images[16];
-                    Image fivec = imageList1.Images[17];
-                    Image fiveh = imageList1.Images[18];
-                    Image fives = imageList1.Images[19];
-                    cardValue = 5;
-                    break;
-
                 case 5:
-                    Image sixd = imageList1.Images[20];
-                    Image sixc = imageList1.Images[21];
-                    Image sixh = imageList1.Images[22];
-                    Image sixs = imageList1.Images[23];
-                    cardValue = 6;
-                    break;
-
                 case 6:
-                    Image sevend = imageList1.Images[24];
-                    Image sevendc = imageList1.Images[25];
-                    Image sevendh = imageList1.Images[26];
-                    Image sevends = imageList1.Images[27];
-                    cardValue = 7;
-                    break;
-
                 case 7:
-                    Image eightd = imageList1.Images[28];
-                    Image eightc = imageList1.Images[29];
-                    Image eighth = imageList1.Images[30];
-                    Image eights = imageList1.Images[31];
-                    cardValue = 8;
+                    cardValue = 2;
                     break;
 
                 case 8:
-                    Image nined = imageList1.Images[32];
-                    Image ninec = imageList1.Images[33];
-                    Image nineh = imageList1.Images[34];
-                    Image nines = imageList1.Images[35];
-                    cardValue = 9;
-                    break;
-
                 case 9:
-                    Image tend = imageList1.Images[36];
-                    Image tenc = imageList1.Images[37];
-                    Image tenh = imageList1.Images[38];
-                    Image tens = imageList1.Images[39];
-                    cardValue = 10;
+                case 10:
+                case 11:
+                    cardValue = 3;
                     break;
 
-                case 10:
-                    Image jc = imageList1.Images[40];
-                    Image jd = imageList1.Images[41];
-                    Image jh = imageList1.Images[42];
-                    Image js = imageList1.Images[43];
-                    Image kc = imageList1.Images[44];
-                    Image kd = imageList1.Images[45];
-                    Image kh = imageList1.Images[46];
-                    Image ks = imageList1.Images[47];
-                    Image qc = imageList1.Images[48];
-                    Image qd = imageList1.Images[49];
-                    Image qh = imageList1.Images[50];
-                    Image qs = imageList1.Images[51];
-                    cardValue = 10;
+                  
+               
+
+               case 12:
+               case 13:
+               case 14:
+               case 15:
+                   cardValue = 4;
+                    break;
+
+             
+
+              case 16:
+                case 17:
+                case 18:
+                case 19:
+                    cardValue = 5;
                     break;
                     
+
+                
+
+                case 20:
+                case 21:
+                case 22:
+                case 23:
+                    cardValue = 6;
+                    break;
+
+
+
+              case 24:
+              case 25:
+              case 26:
+              case 27:
+                      cardValue = 7;
+                    break;
+
+              case 28:
+              case 29:
+              case 30:
+              case 31:
+                    cardValue = 8;
+                    break;
+
+             case 32:
+             case 33:
+             case 34:
+             case 35:
+                 cardValue = 9;
+                    break;
+
+            case 36:
+                case 37:
+                case 38:
+                case 39:
+                case 40:
+                case 41:
+                case 42:
+                case 43:
+                case 44:
+                case 45:
+                case 46:
+                case 47:
+                case 48:
+                case 49:
+                case 50:
+                case 51:
+                    cardValue = 10;
+                        break;
+
+
+                default:
+                    cardValue = 0;
+                    break;
             }
+
+
             return cardValue;
         }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            // Draw two cards for the player
+            DrawPlayerCard(pictureBox1);
+            DrawPlayerCard(pictureBox2);
+
+            // Draw two cards for the dealer
+            DrawDealerCard(pictureBox6);
+            DrawDealerCard(pictureBox7);
+        }
+
+        private void DrawPlayerCard(PictureBox pictureBox)
+        {
+            int cardNumber, cardValue;
+
+            do
+            {
+                cardNumber = rndCard.Next(0, 51);
+            } while (cardNumber == currentCardIndex ||
+                     (pictureBox3.Image != null && pictureBox4.Image != null && pictureBox5.Image != null));
+
+            pictureBox.Image = imageList1.Images[cardNumber];
+            pictureBox.Visible = true;  // Make the PictureBox visible
+            currentCardIndex = cardNumber;
+
+            cardValue = calcCardValue(cardNumber);
+            pictureBox6.Visible = true;
+            pictureBox7.Visible = true;
+            button3.Visible = false;
+            button1.Visible = true;
+            button2.Visible = true;
+
+            // Use the cardValue as needed
+        }
+
+        private void DrawDealerCard(PictureBox pictureBox)
+        {
+            int dealerCardNumber, dealerCardValue;
+
+            do
+            {
+                dealerCardNumber = rndCard.Next(0, 51);
+                dealerCardValue = calcCardValue(dealerCardNumber);
+            } while (dealerCardValue > 30 && dealerCardValue < 52); // Ensure the card value is between 1 and 10
+
+            pictureBox.Image = imageList1.Images[dealerCardNumber];
+
+            // Use dealerCardValue as needed
+        }
     }
 }
 
